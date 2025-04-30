@@ -1,0 +1,3 @@
+[workspace]
+  members = [ "cli","core", "gui", "storage", "tg_gateway"]
+  resolver = "2"

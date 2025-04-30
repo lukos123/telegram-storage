@@ -1,0 +1,16 @@
+[package]
+name = "gui"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+iced = { version = "0.10", features = ["tokio", "canvas","image"] }
+walkdir = "2"
+anyhow = "1"
+dotenvy = "0.15"
+tg_core    = { path = "../core" }
+tg_gateway = { path = "../tg_gateway" }
+storage    = { path = "../storage" }
+cli = { path = "../cli" }
+rfd = "0.15.3"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }

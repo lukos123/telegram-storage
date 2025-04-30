@@ -1,0 +1,10 @@
+/target
+/temp
+.env
+telegram-bot-api.exe
+storage.db
+libcrypto-3-x64.dll
+libssl-3-x64.dll
+temp.mp4
+zlib1.dll
+m.py

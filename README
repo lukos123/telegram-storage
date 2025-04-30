@@ -1,0 +1,123 @@
+
+
+# Telegram Storage
+> **Disclaimer:**  
+This project was originally developed for personal use, so some features or workflows may not be convenient for everyone. If you find something missing or want to add features, feel free to fork the repository and make your own changes. Please note that I do not accept pull requests.
+
+
+A secure, cross-platform file storage system using Telegram as a backend. Files and folders are encrypted with AES-256-GCM and split into chunks, then uploaded to a Telegram chat via a bot. Includes both a command-line interface (CLI) and a graphical user interface (GUI).
+
+## Features
+
+- **End-to-end encryption:** Files are encrypted locally with a password before upload.
+- **Chunked upload:** Files are split into 19 MiB chunks to fit Telegram’s limits.
+- **Folder support:** Upload and download entire folder trees, preserving structure.
+- **Thumbnails:** Image files get encrypted thumbnails for quick previews in the GUI.
+- **Cross-platform:** Works on Windows, Linux, and macOS.
+- **SQLite database:** Stores metadata about files, folders, and Telegram file IDs.
+- **Telegram as storage:** Uses your own Telegram bot and chat as a storage backend.
+
+## Project Structure
+
+```
+.
+├── cli/         # Command-line interface
+├── gui/         # Graphical user interface (Iced)
+├── storage/     # SQLite database layer
+├── tg_gateway/  # Telegram API gateway (teloxide)
+├── core/        # Chunking, encryption, and hashing logic
+```
+
+## Getting Started
+
+### 1. Create a Telegram Bot
+
+- Talk to [@BotFather](https://t.me/BotFather) and create a new bot.
+- Add your bot to a private group or channel.
+- Get the bot token and the chat ID (see [How to get chat ID](https://stackoverflow.com/a/32572159)).
+
+### 2. Setup Environment
+
+Create a `.env` file in the project root or in the `release` folder:
+
+```
+BOT_TOKEN=your_telegram_bot_token
+CHAT_ID=your_chat_id
+```
+
+### 3. Build
+
+You need Rust (edition 2021). Install dependencies and build:
+
+```sh
+cargo build --release
+```
+
+### 4. Usage
+
+#### CLI
+
+Upload a file or folder:
+
+```sh
+cli.exe upload --folder 1 --password mypass ./myfile.txt
+```
+
+Download a file:
+
+```sh
+cli.exe download --file-id 123 --password mypass --out ./file.txt
+```
+
+Download a folder:
+
+```sh
+cli.exe folder --folder-id 1 --password mypass --out ./outdir
+```
+
+List folders and files:
+
+```sh
+cli.exe get-folders
+cli.exe get-files-by-folder --folder-id 1
+```
+
+#### GUI
+
+```sh
+gui.exe
+```
+
+- Browse folders, upload/download files and folders, and see thumbnails for images.
+- Enter your password to decrypt thumbnails and files.
+
+## Security
+
+- All files are encrypted with AES-256-GCM using a key derived from your password and a random salt (Argon2).
+- Only the encrypted data is uploaded to Telegram; your password never leaves your machine.
+- Thumbnails are also encrypted.
+
+## Database
+
+- Uses SQLite (with WAL mode) to store metadata.
+- The database file is `storage.db` by default.
+
+## Limitations
+
+- Maximum file chunk size is 19 MiB (Telegram limit is 50 MiB for bots).
+- Telegram is not designed for file storage; use at your own risk.
+- Rate limits: If you hit Telegram’s rate limits, the app will automatically wait and retry.
+
+## Development
+
+- See each crate’s `Cargo.toml` for dependencies.
+- Main logic is in `core/`, Telegram API in `tg_gateway/`, database in `storage/`.
+- CLI and GUI are in their respective folders.
+
+## License
+
+MIT
+
+---
+
+Feel free to edit or expand this as needed for your project!

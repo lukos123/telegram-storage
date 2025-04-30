@@ -1,0 +1,19 @@
+[package]
+name = "cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+clap       = { version = "4", features = ["derive"] }
+tokio      = { version = "1", features = ["rt-multi-thread", "macros"] }
+dotenvy    = "0.15"
+anyhow     = "1"
+
+tg_core    = { path = "../core" }
+storage    = { path = "../storage" }
+tg_gateway = { path = "../tg_gateway" }
+chrono = { version = "0.4.40", features = ["serde"] }
+walkdir = "2" 
+rand    = "0.8"
+image = { version = "0.24", default-features = false, features = ["jpeg", "png"] }
